@@ -1,6 +1,6 @@
 // ============================================
 // TP2 - Gestion de Tâches
-// Étape 3 : Manipulation du DOM
+// Étape 6 : Utilisation des fonctions
 // ============================================
 
 // --- Déclaration des variables ---
@@ -16,18 +16,39 @@ const taskList = document.getElementById('taskList');
 // --- Message de bienvenue ---
 console.log('🚀 TP2 - Gestionnaire de Tâches');
 console.log('📋 Application initialisée');
-console.log('📝 Liste des tâches:', taches);
-console.log('✅ Script chargé avec succès!');
-
-// Afficher un message dans la console avec les infos
 console.log('%c Bienvenue dans le Gestionnaire de Tâches! ', 'background: #00d9ff; color: #1a1a2e; font-size: 16px; padding: 5px;');
 
 // ============================================
-// Étape 3 : Manipulation du DOM
+// Étape 6 : Fonctions dédiées
 // ============================================
 
-// Fonction pour ajouter une tâche à la liste
-function ajouterTacheAuDOM(texte) {
+/**
+ * Ajoute une nouvelle tâche
+ * @param {string} texte - Le texte de la tâche
+ */
+function ajouterTache(texte) {
+    // Vérifier que le texte n'est pas vide
+    if (!texte || texte.trim() === '') {
+        alert('Veuillez entrer une tâche!');
+        return false;
+    }
+    
+    // Créer l'élément de liste
+    const li = creerElementTache(texte.trim());
+    
+    // Ajouter à la liste
+    taskList.appendChild(li);
+    
+    console.log('✅ Tâche ajoutée:', texte);
+    return true;
+}
+
+/**
+ * Crée un élément DOM pour une tâche
+ * @param {string} texte - Le texte de la tâche
+ * @returns {HTMLElement} - L'élément li créé
+ */
+function creerElementTache(texte) {
     // Créer un élément <li>
     const li = document.createElement('li');
     
@@ -44,24 +65,13 @@ function ajouterTacheAuDOM(texte) {
     const btnComplete = document.createElement('button');
     btnComplete.className = 'btn-complete';
     btnComplete.textContent = '✓ Terminer';
-    btnComplete.addEventListener('click', function() {
-        li.classList.toggle('completed');
-        // Changer le texte du bouton selon l'état
-        if (li.classList.contains('completed')) {
-            btnComplete.textContent = '↩ Reprendre';
-        } else {
-            btnComplete.textContent = '✓ Terminer';
-        }
-    });
+    btnComplete.addEventListener('click', () => terminerTache(li, btnComplete));
     
     // Créer le bouton "Supprimer"
     const btnDelete = document.createElement('button');
     btnDelete.className = 'btn-delete';
     btnDelete.textContent = '✕ Supprimer';
-    btnDelete.addEventListener('click', function() {
-        li.remove();
-        console.log('🗑️ Tâche supprimée:', texte);
-    });
+    btnDelete.addEventListener('click', () => supprimerTache(li));
     
     // Assembler les éléments
     buttonsDiv.appendChild(btnComplete);
@@ -69,52 +79,66 @@ function ajouterTacheAuDOM(texte) {
     li.appendChild(taskText);
     li.appendChild(buttonsDiv);
     
-    // Ajouter le li à la liste
-    taskList.appendChild(li);
-    
-    console.log('✅ Tâche ajoutée:', texte);
+    return li;
 }
 
-// Fonction pour récupérer le texte et ajouter la tâche
-function recupererEtAjouterTache() {
-    // Récupérer le texte de la zone de saisie
-    const texte = taskInput.value.trim();
+/**
+ * Marque une tâche comme terminée ou non terminée
+ * @param {HTMLElement} li - L'élément de la tâche
+ * @param {HTMLElement} btn - Le bouton terminer
+ */
+function terminerTache(li, btn) {
+    li.classList.toggle('completed');
     
-    // Vérifier que le texte n'est pas vide
-    if (texte === '') {
-        alert('Veuillez entrer une tâche!');
-        return;
+    // Changer le texte du bouton selon l'état
+    if (li.classList.contains('completed')) {
+        btn.textContent = '↩ Reprendre';
+        console.log('✔️ Tâche terminée');
+    } else {
+        btn.textContent = '✓ Terminer';
+        console.log('🔄 Tâche reprise');
     }
-    
-    // Ajouter la tâche au DOM
-    ajouterTacheAuDOM(texte);
-    
-    // Vider la zone de saisie
-    taskInput.value = '';
-    
-    // Remettre le focus sur l'input
-    taskInput.focus();
 }
 
-// Test : ajouter le listener au bouton (temporaire pour test)
-addBtn.addEventListener('click', recupererEtAjouterTache);
+/**
+ * Supprime une tâche de la liste
+ * @param {HTMLElement} li - L'élément de la tâche à supprimer
+ */
+function supprimerTache(li) {
+    const texte = li.querySelector('.task-text').textContent;
+    li.remove();
+    console.log('🗑️ Tâche supprimée:', texte);
+}
+
+/**
+ * Gère l'ajout d'une tâche depuis l'input
+ */
+function gererAjoutTache() {
+    const texte = taskInput.value;
+    
+    if (ajouterTache(texte)) {
+        // Vider la zone de saisie
+        taskInput.value = '';
+        // Remettre le focus sur l'input
+        taskInput.focus();
+    }
+}
 
 // ============================================
-// Étape 4 : Gestion des événements
+// Écouteurs d'événements
 // ============================================
 
-// Écouteur d'événement sur le bouton "Ajouter"
-addBtn.addEventListener('click', recupererEtAjouterTache);
+// Écouteur sur le bouton "Ajouter"
+addBtn.addEventListener('click', gererAjoutTache);
 
-// Écouteur d'événement pour la touche "Entrée" dans l'input
+// Écouteur pour la touche "Entrée"
 taskInput.addEventListener('keypress', function(event) {
-    // Vérifier si la touche pressée est "Entrée" (code 13 ou 'Enter')
     if (event.key === 'Enter') {
-        recupererEtAjouterTache();
+        gererAjoutTache();
     }
 });
 
-// Focus automatique sur l'input au chargement de la page
+// Focus automatique sur l'input
 taskInput.focus();
 
-console.log('🎯 Événements configurés: click sur bouton + touche Entrée');
+console.log('🎯 Application prête - Fonctions: ajouterTache(), supprimerTache(), terminerTache()');
