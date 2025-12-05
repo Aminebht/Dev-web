@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercice 8 - Promesse simple</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #1a1a2e;
+            color: #eaeaea;
+        }
+        h1 {
+            color: #00d9ff;
+            text-align: center;
+        }
+        h2 {
+            color: #ff6b6b;
+            border-bottom: 2px solid #ff6b6b;
+            padding-bottom: 10px;
+        }
+        .exercise {
+            background-color: #16213e;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+        .output {
+            background-color: #0f0f23;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Consolas', monospace;
+            white-space: pre-wrap;
+            border-left: 4px solid #00d9ff;
+        }
+        .loading {
+            color: #ffaa00;
+        }
+        .success {
+            color: #00ff88;
+        }
+        button {
+            background-color: #00d9ff;
+            color: #1a1a2e;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background-color: #00b8d9;
+        }
+    </style>
+</head>
+<body>
+    <h1>🚀 Exercice 8 – Promesse simple</h1>
+    
+    <div class="exercise">
+        <h2>Simulation de téléchargement</h2>
+        <button onclick="lancerTelechargement()">▶️ Lancer le téléchargement</button>
+        <button onclick="lancerTelechargementAsync()">▶️ Version async/await</button>
+        <div id="exercice8" class="output"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
