@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercice 9 - Fetch + async/await</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #1a1a2e;
+            color: #eaeaea;
+        }
+        h1 {
+            color: #00d9ff;
+            text-align: center;
+        }
+        h2 {
+            color: #ff6b6b;
+            border-bottom: 2px solid #ff6b6b;
+            padding-bottom: 10px;
+        }
+        .exercise {
+            background-color: #16213e;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+        .output {
+            background-color: #0f0f23;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Consolas', monospace;
+            white-space: pre-wrap;
+            border-left: 4px solid #00d9ff;
+            min-height: 200px;
+        }
+        button {
+            background-color: #00d9ff;
+            color: #1a1a2e;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background-color: #00b8d9;
+        }
+        button:disabled {
+            background-color: #666;
+            cursor: not-allowed;
+        }
+        .post-card {
+            background-color: #1a1a2e;
+            border-left: 3px solid #00d9ff;
+            padding: 10px 15px;
+            margin: 10px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        .post-id {
+            color: #00d9ff;
+            font-weight: bold;
+        }
+        .post-title {
+            color: #eaeaea;
+        }
+        .loading {
+            color: #ffaa00;
+        }
+        .error {
+            color: #ff4444;
+        }
+        .success {
+            color: #00ff88;
+        }
+    </style>
+</head>
+<body>
+    <h1>🚀 Exercice 9 – Fetch + async/await</h1>
+    
+    <div class="exercise">
+        <h2>Récupération des posts depuis JSONPlaceholder API</h2>
+        <button onclick="fetchPosts()" id="btnFetch">📥 Récupérer les 5 premiers posts</button>
+        <button onclick="fetchAllPosts()">📥 Récupérer tous les posts</button>
+        <div id="exercice9" class="output"></div>
+    </div>
+
+    <div class="exercise">
+        <h2>Code source</h2>
+        <div id="codeSource" class="output"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
