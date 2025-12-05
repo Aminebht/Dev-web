@@ -1,0 +1,155 @@
+/* ============================================
+   TP2 - Gestion de Tâches - Style CSS
+   ============================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: #eaeaea;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #16213e;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+h1 {
+    text-align: center;
+    color: #00d9ff;
+    margin-bottom: 30px;
+    font-size: 2rem;
+}
+
+/* Zone de saisie */
+.input-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+#taskInput {
+    flex: 1;
+    padding: 15px 20px;
+    font-size: 16px;
+    border: 2px solid #0f3460;
+    border-radius: 10px;
+    background-color: #0f0f23;
+    color: #eaeaea;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+#taskInput:focus {
+    border-color: #00d9ff;
+}
+
+#taskInput::placeholder {
+    color: #666;
+}
+
+#addBtn {
+    padding: 15px 30px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #00d9ff;
+    color: #1a1a2e;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+#addBtn:hover {
+    background-color: #00b8d9;
+    transform: translateY(-2px);
+}
+
+#addBtn:active {
+    transform: translateY(0);
+}
+
+/* Liste des tâches */
+#taskList {
+    list-style: none;
+}
+
+#taskList li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+    margin-bottom: 10px;
+    background-color: #0f3460;
+    border-radius: 10px;
+    border-left: 4px solid #00d9ff;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+#taskList li:hover {
+    transform: translateX(5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+#taskList li .task-text {
+    flex: 1;
+    font-size: 16px;
+}
+
+#taskList li.completed .task-text {
+    text-decoration: line-through;
+    color: #666;
+}
+
+#taskList li.completed {
+    border-left-color: #00ff88;
+    opacity: 0.7;
+}
+
+/* Boutons des tâches */
+.task-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.task-buttons button {
+    padding: 8px 15px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.task-buttons button:hover {
+    opacity: 0.8;
+}
+
+.btn-complete {
+    background-color: #00ff88;
+    color: #1a1a2e;
+}
+
+.btn-delete {
+    background-color: #ff4757;
+    color: white;
+}
+
+/* Message vide */
+.empty-message {
+    text-align: center;
+    color: #666;
+    font-style: italic;
+    padding: 30px;
+}
