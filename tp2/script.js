@@ -68,3 +68,23 @@ function recupererEtAjouterTache() {
 
 // Test : ajouter le listener au bouton (temporaire pour test)
 addBtn.addEventListener('click', recupererEtAjouterTache);
+
+// ============================================
+// Étape 4 : Gestion des événements
+// ============================================
+
+// Écouteur d'événement sur le bouton "Ajouter"
+addBtn.addEventListener('click', recupererEtAjouterTache);
+
+// Écouteur d'événement pour la touche "Entrée" dans l'input
+taskInput.addEventListener('keypress', function(event) {
+    // Vérifier si la touche pressée est "Entrée" (code 13 ou 'Enter')
+    if (event.key === 'Enter') {
+        recupererEtAjouterTache();
+    }
+});
+
+// Focus automatique sur l'input au chargement de la page
+taskInput.focus();
+
+console.log('🎯 Événements configurés: click sur bouton + touche Entrée');
