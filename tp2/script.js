@@ -36,8 +36,38 @@ function ajouterTacheAuDOM(texte) {
     taskText.className = 'task-text';
     taskText.textContent = texte;
     
-    // Ajouter le texte au li
+    // Créer le conteneur pour les boutons
+    const buttonsDiv = document.createElement('div');
+    buttonsDiv.className = 'task-buttons';
+    
+    // Créer le bouton "Terminer"
+    const btnComplete = document.createElement('button');
+    btnComplete.className = 'btn-complete';
+    btnComplete.textContent = '✓ Terminer';
+    btnComplete.addEventListener('click', function() {
+        li.classList.toggle('completed');
+        // Changer le texte du bouton selon l'état
+        if (li.classList.contains('completed')) {
+            btnComplete.textContent = '↩ Reprendre';
+        } else {
+            btnComplete.textContent = '✓ Terminer';
+        }
+    });
+    
+    // Créer le bouton "Supprimer"
+    const btnDelete = document.createElement('button');
+    btnDelete.className = 'btn-delete';
+    btnDelete.textContent = '✕ Supprimer';
+    btnDelete.addEventListener('click', function() {
+        li.remove();
+        console.log('🗑️ Tâche supprimée:', texte);
+    });
+    
+    // Assembler les éléments
+    buttonsDiv.appendChild(btnComplete);
+    buttonsDiv.appendChild(btnDelete);
     li.appendChild(taskText);
+    li.appendChild(buttonsDiv);
     
     // Ajouter le li à la liste
     taskList.appendChild(li);
