@@ -1,9 +1,12 @@
 // ============================================
 // TP2 - Gestion de Tâches
-// Étape 8 : Introduction aux objets
+// Étape 9 : Persistance avec LocalStorage
 // ============================================
 
 // --- Déclaration des variables ---
+
+// Clé pour le localStorage
+const STORAGE_KEY = 'todolist_taches';
 
 // Liste des tâches (tableau d'objets)
 // Chaque tâche est un objet avec: { texte, terminee }
@@ -20,8 +23,30 @@ console.log('📋 Application initialisée');
 console.log('%c Bienvenue dans le Gestionnaire de Tâches! ', 'background: #00d9ff; color: #1a1a2e; font-size: 16px; padding: 5px;');
 
 // ============================================
-// Étape 8 : Tâches comme objets
+// Étape 9 : LocalStorage
 // ============================================
+
+/**
+ * Sauvegarde les tâches dans le localStorage
+ */
+function sauvegarderTaches() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(taches));
+    console.log('💾 Tâches sauvegardées dans localStorage');
+}
+
+/**
+ * Charge les tâches depuis le localStorage
+ */
+function chargerTaches() {
+    const donnees = localStorage.getItem(STORAGE_KEY);
+    if (donnees) {
+        taches = JSON.parse(donnees);
+        console.log('📂 Tâches chargées depuis localStorage:', taches);
+    } else {
+        taches = [];
+        console.log('📂 Aucune tâche sauvegardée trouvée');
+    }
+}
 
 /**
  * Ajoute une nouvelle tâche (objet) au tableau
@@ -48,6 +73,10 @@ function ajouterTache(texte) {
     
     console.log('✅ Tâche ajoutée:', nouvelleTache);
     console.log('📋 Tableau des tâches:', taches);
+    
+    // Sauvegarder dans localStorage
+    sauvegarderTaches();
+    
     return true;
 }
 
@@ -133,6 +162,9 @@ function terminerTache(index) {
     
     const etat = taches[index].terminee ? '✔️ terminée' : '🔄 reprise';
     console.log(`Tâche ${etat}:`, taches[index].texte);
+    
+    // Sauvegarder dans localStorage
+    sauvegarderTaches();
 }
 
 /**
@@ -140,11 +172,13 @@ function terminerTache(index) {
  * @param {number} index - L'index de la tâche à supprimer
  */
 function supprimerTache(index) {
-    const texte = taches[index];
+    const texte = taches[index].texte;
     // Supprimer du tableau
     taches.splice(index, 1);
     // Rafraîchir l'affichage
     afficherTaches();
+    // Sauvegarder dans localStorage
+    sauvegarderTaches();
     console.log('🗑️ Tâche supprimée:', texte);
     console.log('📋 Tableau des tâches:', taches);
 }
@@ -180,8 +214,11 @@ taskInput.addEventListener('keypress', function(event) {
 // Focus automatique sur l'input
 taskInput.focus();
 
-// Afficher l'état initial (liste vide)
+// Charger les tâches sauvegardées au démarrage
+chargerTaches();
+
+// Afficher les tâches
 afficherTaches();
 
 console.log('🎯 Application prête - Fonctions: ajouterTache(), supprimerTache(), terminerTache()');
-console.log('📦 Les tâches sont des objets: { texte, terminee }');
+console.log('💾 Les tâches sont persistées dans localStorage');
