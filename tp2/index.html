@@ -16,6 +16,28 @@
             <button id="addBtn">Ajouter</button>
         </div>
         
+        <!-- Zone de recherche -->
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="🔍 Rechercher une tâche...">
+        </div>
+        
+        <!-- Compteurs -->
+        <div class="stats-container">
+            <div class="stat">
+                <span class="stat-label">Total:</span>
+                <span id="totalCount" class="stat-value">0</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">En cours:</span>
+                <span id="pendingCount" class="stat-value pending">0</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">Terminées:</span>
+                <span id="completedCount" class="stat-value completed">0</span>
+            </div>
+            <button id="clearAllBtn" class="btn-clear-all">🗑️ Tout supprimer</button>
+        </div>
+        
         <!-- Liste des tâches -->
         <ul id="taskList">
             <!-- Les tâches seront ajoutées ici dynamiquement -->

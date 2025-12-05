@@ -16,6 +16,11 @@ let taches = [];
 const taskInput = document.getElementById('taskInput');
 const addBtn = document.getElementById('addBtn');
 const taskList = document.getElementById('taskList');
+const searchInput = document.getElementById('searchInput');
+const clearAllBtn = document.getElementById('clearAllBtn');
+const totalCount = document.getElementById('totalCount');
+const pendingCount = document.getElementById('pendingCount');
+const completedCount = document.getElementById('completedCount');
 
 // --- Message de bienvenue ---
 console.log('🚀 TP2 - Gestionnaire de Tâches');
@@ -101,6 +106,25 @@ function afficherTaches() {
         emptyMsg.textContent = 'Aucune tâche pour le moment. Ajoutez-en une!';
         taskList.appendChild(emptyMsg);
     }
+    
+    // Mettre à jour les compteurs
+    mettreAJourCompteurs();
+}
+
+/**
+ * Met à jour les compteurs de tâches
+ */
+function mettreAJourCompteurs() {
+    const total = taches.length;
+    const terminees = taches.filter(t => t.terminee).length;
+    const enCours = total - terminees;
+    
+    totalCount.textContent = total;
+    pendingCount.textContent = enCours;
+    completedCount.textContent = terminees;
+    
+    // Désactiver le bouton "Tout supprimer" si pas de tâches
+    clearAllBtn.disabled = total === 0;
 }
 
 /**
@@ -184,6 +208,38 @@ function supprimerTache(index) {
 }
 
 /**
+ * Supprime toutes les tâches
+ */
+function toutSupprimer() {
+    if (taches.length === 0) return;
+    
+    if (confirm('Êtes-vous sûr de vouloir supprimer toutes les tâches?')) {
+        taches = [];
+        afficherTaches();
+        sauvegarderTaches();
+        console.log('🗑️ Toutes les tâches ont été supprimées');
+    }
+}
+
+/**
+ * Filtre les tâches selon le texte de recherche
+ * @param {string} recherche - Le texte à rechercher
+ */
+function filtrerTaches(recherche) {
+    const items = taskList.querySelectorAll('li:not(.empty-message)');
+    const rechercheMin = recherche.toLowerCase().trim();
+    
+    items.forEach(li => {
+        const texte = li.querySelector('.task-text').textContent.toLowerCase();
+        if (texte.includes(rechercheMin) || rechercheMin === '') {
+            li.classList.remove('hidden');
+        } else {
+            li.classList.add('hidden');
+        }
+    });
+}
+
+/**
  * Gère l'ajout d'une tâche depuis l'input
  */
 function gererAjoutTache() {
@@ -211,6 +267,14 @@ taskInput.addEventListener('keypress', function(event) {
     }
 });
 
+// Écouteur pour le bouton "Tout supprimer"
+clearAllBtn.addEventListener('click', toutSupprimer);
+
+// Écouteur pour la recherche
+searchInput.addEventListener('input', function() {
+    filtrerTaches(this.value);
+});
+
 // Focus automatique sur l'input
 taskInput.focus();
 
@@ -222,3 +286,4 @@ afficherTaches();
 
 console.log('🎯 Application prête - Fonctions: ajouterTache(), supprimerTache(), terminerTache()');
 console.log('💾 Les tâches sont persistées dans localStorage');
+console.log('🔍 Recherche et compteurs disponibles');

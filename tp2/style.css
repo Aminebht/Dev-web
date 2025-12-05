@@ -153,3 +153,87 @@ h1 {
     font-style: italic;
     padding: 30px;
 }
+
+/* Zone de recherche */
+.search-container {
+    margin-bottom: 20px;
+}
+
+#searchInput {
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 14px;
+    border: 2px solid #0f3460;
+    border-radius: 10px;
+    background-color: #0f0f23;
+    color: #eaeaea;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+#searchInput:focus {
+    border-color: #ffaa00;
+}
+
+/* Statistiques */
+.stats-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #0f3460;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.stat {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.stat-label {
+    color: #888;
+    font-size: 14px;
+}
+
+.stat-value {
+    font-size: 18px;
+    font-weight: bold;
+    color: #00d9ff;
+}
+
+.stat-value.pending {
+    color: #ffaa00;
+}
+
+.stat-value.completed {
+    color: #00ff88;
+}
+
+.btn-clear-all {
+    padding: 8px 15px;
+    font-size: 14px;
+    background-color: #ff4757;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-clear-all:hover {
+    background-color: #ff6b6b;
+}
+
+.btn-clear-all:disabled {
+    background-color: #666;
+    cursor: not-allowed;
+}
+
+/* Animation pour les tâches filtrées */
+#taskList li.hidden {
+    display: none;
+}
