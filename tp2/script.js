@@ -1,6 +1,6 @@
 // ============================================
 // TP2 - Gestion de Tâches
-// Étape 2 : Premiers scripts JavaScript
+// Étape 3 : Manipulation du DOM
 // ============================================
 
 // --- Déclaration des variables ---
@@ -21,3 +21,50 @@ console.log('✅ Script chargé avec succès!');
 
 // Afficher un message dans la console avec les infos
 console.log('%c Bienvenue dans le Gestionnaire de Tâches! ', 'background: #00d9ff; color: #1a1a2e; font-size: 16px; padding: 5px;');
+
+// ============================================
+// Étape 3 : Manipulation du DOM
+// ============================================
+
+// Fonction pour ajouter une tâche à la liste
+function ajouterTacheAuDOM(texte) {
+    // Créer un élément <li>
+    const li = document.createElement('li');
+    
+    // Créer le span pour le texte de la tâche
+    const taskText = document.createElement('span');
+    taskText.className = 'task-text';
+    taskText.textContent = texte;
+    
+    // Ajouter le texte au li
+    li.appendChild(taskText);
+    
+    // Ajouter le li à la liste
+    taskList.appendChild(li);
+    
+    console.log('✅ Tâche ajoutée:', texte);
+}
+
+// Fonction pour récupérer le texte et ajouter la tâche
+function recupererEtAjouterTache() {
+    // Récupérer le texte de la zone de saisie
+    const texte = taskInput.value.trim();
+    
+    // Vérifier que le texte n'est pas vide
+    if (texte === '') {
+        alert('Veuillez entrer une tâche!');
+        return;
+    }
+    
+    // Ajouter la tâche au DOM
+    ajouterTacheAuDOM(texte);
+    
+    // Vider la zone de saisie
+    taskInput.value = '';
+    
+    // Remettre le focus sur l'input
+    taskInput.focus();
+}
+
+// Test : ajouter le listener au bouton (temporaire pour test)
+addBtn.addEventListener('click', recupererEtAjouterTache);
