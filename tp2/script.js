@@ -1,11 +1,12 @@
 // ============================================
 // TP2 - Gestion de Tâches
-// Étape 7 : Tableaux et boucles
+// Étape 8 : Introduction aux objets
 // ============================================
 
 // --- Déclaration des variables ---
 
-// Liste des tâches (tableau pour stocker les tâches)
+// Liste des tâches (tableau d'objets)
+// Chaque tâche est un objet avec: { texte, terminee }
 let taches = [];
 
 // Référence aux éléments du DOM
@@ -19,11 +20,11 @@ console.log('📋 Application initialisée');
 console.log('%c Bienvenue dans le Gestionnaire de Tâches! ', 'background: #00d9ff; color: #1a1a2e; font-size: 16px; padding: 5px;');
 
 // ============================================
-// Étape 7 : Gestion avec tableau
+// Étape 8 : Tâches comme objets
 // ============================================
 
 /**
- * Ajoute une nouvelle tâche au tableau et rafraîchit l'affichage
+ * Ajoute une nouvelle tâche (objet) au tableau
  * @param {string} texte - Le texte de la tâche
  */
 function ajouterTache(texte) {
@@ -33,13 +34,19 @@ function ajouterTache(texte) {
         return false;
     }
     
+    // Créer un objet tâche
+    const nouvelleTache = {
+        texte: texte.trim(),
+        terminee: false
+    };
+    
     // Ajouter au tableau
-    taches.push(texte.trim());
+    taches.push(nouvelleTache);
     
     // Rafraîchir l'affichage
     afficherTaches();
     
-    console.log('✅ Tâche ajoutée:', texte);
+    console.log('✅ Tâche ajoutée:', nouvelleTache);
     console.log('📋 Tableau des tâches:', taches);
     return true;
 }
@@ -53,7 +60,8 @@ function afficherTaches() {
     
     // Parcourir le tableau avec une boucle
     for (let i = 0; i < taches.length; i++) {
-        const li = creerElementTache(taches[i], i);
+        const tache = taches[i];
+        const li = creerElementTache(tache, i);
         taskList.appendChild(li);
     }
     
@@ -68,19 +76,24 @@ function afficherTaches() {
 
 /**
  * Crée un élément DOM pour une tâche
- * @param {string} texte - Le texte de la tâche
+ * @param {Object} tache - L'objet tâche { texte, terminee }
  * @param {number} index - L'index de la tâche dans le tableau
  * @returns {HTMLElement} - L'élément li créé
  */
-function creerElementTache(texte, index) {
+function creerElementTache(tache, index) {
     // Créer un élément <li>
     const li = document.createElement('li');
     li.dataset.index = index;
     
+    // Ajouter la classe completed si la tâche est terminée
+    if (tache.terminee) {
+        li.classList.add('completed');
+    }
+    
     // Créer le span pour le texte de la tâche
     const taskText = document.createElement('span');
     taskText.className = 'task-text';
-    taskText.textContent = texte;
+    taskText.textContent = tache.texte;
     
     // Créer le conteneur pour les boutons
     const buttonsDiv = document.createElement('div');
@@ -89,8 +102,8 @@ function creerElementTache(texte, index) {
     // Créer le bouton "Terminer"
     const btnComplete = document.createElement('button');
     btnComplete.className = 'btn-complete';
-    btnComplete.textContent = '✓ Terminer';
-    btnComplete.addEventListener('click', () => terminerTache(li, btnComplete));
+    btnComplete.textContent = tache.terminee ? '↩ Reprendre' : '✓ Terminer';
+    btnComplete.addEventListener('click', () => terminerTache(index));
     
     // Créer le bouton "Supprimer"
     const btnDelete = document.createElement('button');
@@ -109,20 +122,17 @@ function creerElementTache(texte, index) {
 
 /**
  * Marque une tâche comme terminée ou non terminée
- * @param {HTMLElement} li - L'élément de la tâche
- * @param {HTMLElement} btn - Le bouton terminer
+ * @param {number} index - L'index de la tâche
  */
-function terminerTache(li, btn) {
-    li.classList.toggle('completed');
+function terminerTache(index) {
+    // Inverser l'état de la tâche
+    taches[index].terminee = !taches[index].terminee;
     
-    // Changer le texte du bouton selon l'état
-    if (li.classList.contains('completed')) {
-        btn.textContent = '↩ Reprendre';
-        console.log('✔️ Tâche terminée');
-    } else {
-        btn.textContent = '✓ Terminer';
-        console.log('🔄 Tâche reprise');
-    }
+    // Rafraîchir l'affichage
+    afficherTaches();
+    
+    const etat = taches[index].terminee ? '✔️ terminée' : '🔄 reprise';
+    console.log(`Tâche ${etat}:`, taches[index].texte);
 }
 
 /**
@@ -174,4 +184,4 @@ taskInput.focus();
 afficherTaches();
 
 console.log('🎯 Application prête - Fonctions: ajouterTache(), supprimerTache(), terminerTache()');
-console.log('📊 Les tâches sont maintenant stockées dans un tableau');
+console.log('📦 Les tâches sont des objets: { texte, terminee }');
