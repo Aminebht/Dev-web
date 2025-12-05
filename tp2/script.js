@@ -1,11 +1,11 @@
 // ============================================
 // TP2 - Gestion de Tâches
-// Étape 6 : Utilisation des fonctions
+// Étape 7 : Tableaux et boucles
 // ============================================
 
 // --- Déclaration des variables ---
 
-// Liste des tâches (tableau vide pour l'instant)
+// Liste des tâches (tableau pour stocker les tâches)
 let taches = [];
 
 // Référence aux éléments du DOM
@@ -19,11 +19,11 @@ console.log('📋 Application initialisée');
 console.log('%c Bienvenue dans le Gestionnaire de Tâches! ', 'background: #00d9ff; color: #1a1a2e; font-size: 16px; padding: 5px;');
 
 // ============================================
-// Étape 6 : Fonctions dédiées
+// Étape 7 : Gestion avec tableau
 // ============================================
 
 /**
- * Ajoute une nouvelle tâche
+ * Ajoute une nouvelle tâche au tableau et rafraîchit l'affichage
  * @param {string} texte - Le texte de la tâche
  */
 function ajouterTache(texte) {
@@ -33,24 +33,49 @@ function ajouterTache(texte) {
         return false;
     }
     
-    // Créer l'élément de liste
-    const li = creerElementTache(texte.trim());
+    // Ajouter au tableau
+    taches.push(texte.trim());
     
-    // Ajouter à la liste
-    taskList.appendChild(li);
+    // Rafraîchir l'affichage
+    afficherTaches();
     
     console.log('✅ Tâche ajoutée:', texte);
+    console.log('📋 Tableau des tâches:', taches);
     return true;
+}
+
+/**
+ * Affiche toutes les tâches du tableau dans le DOM
+ */
+function afficherTaches() {
+    // Vider la liste actuelle
+    taskList.innerHTML = '';
+    
+    // Parcourir le tableau avec une boucle
+    for (let i = 0; i < taches.length; i++) {
+        const li = creerElementTache(taches[i], i);
+        taskList.appendChild(li);
+    }
+    
+    // Afficher un message si la liste est vide
+    if (taches.length === 0) {
+        const emptyMsg = document.createElement('li');
+        emptyMsg.className = 'empty-message';
+        emptyMsg.textContent = 'Aucune tâche pour le moment. Ajoutez-en une!';
+        taskList.appendChild(emptyMsg);
+    }
 }
 
 /**
  * Crée un élément DOM pour une tâche
  * @param {string} texte - Le texte de la tâche
+ * @param {number} index - L'index de la tâche dans le tableau
  * @returns {HTMLElement} - L'élément li créé
  */
-function creerElementTache(texte) {
+function creerElementTache(texte, index) {
     // Créer un élément <li>
     const li = document.createElement('li');
+    li.dataset.index = index;
     
     // Créer le span pour le texte de la tâche
     const taskText = document.createElement('span');
@@ -71,7 +96,7 @@ function creerElementTache(texte) {
     const btnDelete = document.createElement('button');
     btnDelete.className = 'btn-delete';
     btnDelete.textContent = '✕ Supprimer';
-    btnDelete.addEventListener('click', () => supprimerTache(li));
+    btnDelete.addEventListener('click', () => supprimerTache(index));
     
     // Assembler les éléments
     buttonsDiv.appendChild(btnComplete);
@@ -102,12 +127,16 @@ function terminerTache(li, btn) {
 
 /**
  * Supprime une tâche de la liste
- * @param {HTMLElement} li - L'élément de la tâche à supprimer
+ * @param {number} index - L'index de la tâche à supprimer
  */
-function supprimerTache(li) {
-    const texte = li.querySelector('.task-text').textContent;
-    li.remove();
+function supprimerTache(index) {
+    const texte = taches[index];
+    // Supprimer du tableau
+    taches.splice(index, 1);
+    // Rafraîchir l'affichage
+    afficherTaches();
     console.log('🗑️ Tâche supprimée:', texte);
+    console.log('📋 Tableau des tâches:', taches);
 }
 
 /**
@@ -141,4 +170,8 @@ taskInput.addEventListener('keypress', function(event) {
 // Focus automatique sur l'input
 taskInput.focus();
 
+// Afficher l'état initial (liste vide)
+afficherTaches();
+
 console.log('🎯 Application prête - Fonctions: ajouterTache(), supprimerTache(), terminerTache()');
+console.log('📊 Les tâches sont maintenant stockées dans un tableau');
