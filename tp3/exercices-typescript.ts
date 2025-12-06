@@ -8,8 +8,8 @@
 // ============================================
 
 // String - chaîne de caractères
-let nom: string = "Noor";
-let prenom: string = "Ben Ahmed";
+let nom: string = "Belhadj";
+let prenom: string = "Amine";
 let message: string = `Bonjour, je suis ${prenom} ${nom}`;
 
 // Number - nombres (entiers et décimaux)
