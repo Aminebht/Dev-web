@@ -226,3 +226,325 @@ etudiantB.afficherInfos();
 console.log(`\nNom complet de l'étudiant A: ${etudiantA.getNomComplet()}`);
 
 console.log("\n✅ Partie 4 terminée - Bases de TypeScript maîtrisées!");
+
+// ============================================
+// ============================================
+// Partie 5 : Approfondissement de TypeScript
+// ============================================
+// ============================================
+
+console.log("\n\n========================================");
+console.log("=== Partie 5: TypeScript Avancé ===");
+console.log("========================================\n");
+
+// ============================================
+// 1. Types Génériques (Generics)
+// ============================================
+
+/**
+ * GENERICS - Permettent de créer des composants réutilisables
+ * qui fonctionnent avec différents types tout en conservant
+ * la sécurité de typage.
+ */
+
+// Fonction générique simple
+// T est un "type parameter" qui sera déterminé à l'utilisation
+function identite<T>(valeur: T): T {
+    return valeur;
+}
+
+console.log("=== 1. Types Génériques ===");
+console.log(`identite<string>("Hello") = ${identite<string>("Hello")}`);
+console.log(`identite<number>(42) = ${identite<number>(42)}`);
+
+/**
+ * Fonction générique qui crée un tableau de valeurs du même type
+ * @param valeur - La valeur à répéter
+ * @param fois - Le nombre de répétitions
+ * @returns Un tableau contenant la valeur répétée
+ */
+function creerTableau<T>(valeur: T, fois: number): T[] {
+    const resultat: T[] = [];
+    for (let i = 0; i < fois; i++) {
+        resultat.push(valeur);
+    }
+    return resultat;
+}
+
+console.log(`creerTableau<string>("A", 3) = ${JSON.stringify(creerTableau<string>("A", 3))}`);
+console.log(`creerTableau<number>(7, 4) = ${JSON.stringify(creerTableau<number>(7, 4))}`);
+
+// Fonction générique avec plusieurs types
+function fusionner<T, U>(obj1: T, obj2: U): T & U {
+    return { ...obj1, ...obj2 } as T & U;
+}
+
+const personne = { nom: "Noor" };
+const details = { age: 20, ville: "Tunis" };
+const personneFusionnee = fusionner(personne, details);
+console.log("Fusion d'objets:", personneFusionnee);
+
+// Interface générique
+interface Reponse<T> {
+    succes: boolean;
+    donnees: T;
+    message: string;
+}
+
+const reponseString: Reponse<string> = {
+    succes: true,
+    donnees: "Opération réussie",
+    message: "OK"
+};
+
+const reponseNombre: Reponse<number[]> = {
+    succes: true,
+    donnees: [1, 2, 3, 4, 5],
+    message: "Nombres récupérés"
+};
+
+console.log("Réponse string:", reponseString);
+console.log("Réponse nombres:", reponseNombre);
+
+// Classe générique
+class Boite<T> {
+    private contenu: T;
+
+    constructor(valeur: T) {
+        this.contenu = valeur;
+    }
+
+    getContenu(): T {
+        return this.contenu;
+    }
+
+    setContenu(valeur: T): void {
+        this.contenu = valeur;
+    }
+}
+
+const boiteString = new Boite<string>("Cadeau");
+const boiteNombre = new Boite<number>(100);
+
+console.log(`Boite<string>: ${boiteString.getContenu()}`);
+console.log(`Boite<number>: ${boiteNombre.getContenu()}`);
+
+// ============================================
+// 2. Unions de types et Types optionnels
+// ============================================
+
+/**
+ * UNION TYPES - Permettent à une variable d'accepter
+ * plusieurs types différents avec l'opérateur |
+ */
+
+console.log("\n=== 2. Unions de Types et Types Optionnels ===");
+
+// Union de types simple
+let identifiant: string | number;
+identifiant = "ABC123";
+console.log(`identifiant (string): ${identifiant}`);
+identifiant = 12345;
+console.log(`identifiant (number): ${identifiant}`);
+
+// Fonction avec union de types
+function afficherIdentifiant(id: string | number): void {
+    // Type guard - vérification du type à l'exécution
+    if (typeof id === "string") {
+        console.log(`ID (string, majuscules): ${id.toUpperCase()}`);
+    } else {
+        console.log(`ID (number, arrondi): ${Math.round(id)}`);
+    }
+}
+
+afficherIdentifiant("abc123");
+afficherIdentifiant(456.789);
+
+// Type alias avec union
+type Resultat = "succes" | "erreur" | "en_attente";
+
+function traiterResultat(resultat: Resultat): string {
+    switch (resultat) {
+        case "succes":
+            return "✅ Opération réussie";
+        case "erreur":
+            return "❌ Une erreur est survenue";
+        case "en_attente":
+            return "⏳ En cours de traitement";
+    }
+}
+
+console.log(traiterResultat("succes"));
+console.log(traiterResultat("erreur"));
+
+// Types optionnels dans les fonctions
+interface ConfigurationAPI {
+    url: string;
+    methode?: "GET" | "POST" | "PUT" | "DELETE";  // Optionnel avec union
+    timeout?: number;  // Optionnel
+    headers?: Record<string, string>;  // Optionnel
+}
+
+function appelAPI(config: ConfigurationAPI): void {
+    // Valeurs par défaut pour les propriétés optionnelles
+    const methode = config.methode ?? "GET";
+    const timeout = config.timeout ?? 5000;
+    
+    console.log(`\nAppel API:`);
+    console.log(`  URL: ${config.url}`);
+    console.log(`  Méthode: ${methode}`);
+    console.log(`  Timeout: ${timeout}ms`);
+    if (config.headers) {
+        console.log(`  Headers: ${JSON.stringify(config.headers)}`);
+    }
+}
+
+// Appel avec configuration minimale
+appelAPI({ url: "https://api.example.com/users" });
+
+// Appel avec configuration complète
+appelAPI({
+    url: "https://api.example.com/data",
+    methode: "POST",
+    timeout: 10000,
+    headers: { "Content-Type": "application/json" }
+});
+
+// Union avec null (Nullable types)
+function trouverUtilisateur(id: number): string | null {
+    const utilisateurs: Record<number, string> = {
+        1: "Alice",
+        2: "Bob",
+        3: "Charlie"
+    };
+    return utilisateurs[id] ?? null;
+}
+
+console.log(`\nUtilisateur 1: ${trouverUtilisateur(1)}`);
+console.log(`Utilisateur 99: ${trouverUtilisateur(99)}`);
+
+// ============================================
+// 3. Énumérations (Enums)
+// ============================================
+
+/**
+ * ENUMS - Permettent de définir un ensemble de constantes nommées.
+ * Utiles pour représenter un groupe de valeurs liées.
+ */
+
+console.log("\n=== 3. Énumérations (Enums) ===");
+
+// Enum numérique (valeurs auto-incrémentées)
+enum JourSemaine {
+    Lundi = 1,
+    Mardi,
+    Mercredi,
+    Jeudi,
+    Vendredi,
+    Samedi,
+    Dimanche
+}
+
+console.log(`Lundi = ${JourSemaine.Lundi}`);
+console.log(`Vendredi = ${JourSemaine.Vendredi}`);
+console.log(`Jour 3 = ${JourSemaine[3]}`);  // Accès inverse
+
+// Enum string (valeurs explicites)
+enum Couleur {
+    Rouge = "#FF0000",
+    Vert = "#00FF00",
+    Bleu = "#0000FF",
+    Jaune = "#FFFF00",
+    Noir = "#000000",
+    Blanc = "#FFFFFF"
+}
+
+console.log(`Couleur Rouge = ${Couleur.Rouge}`);
+console.log(`Couleur Bleu = ${Couleur.Bleu}`);
+
+// Enum pour les statuts d'une tâche
+enum StatutTache {
+    NonCommencee = "NON_COMMENCEE",
+    EnCours = "EN_COURS",
+    EnPause = "EN_PAUSE",
+    Terminee = "TERMINEE",
+    Annulee = "ANNULEE"
+}
+
+// Utilisation de l'enum dans une interface
+interface Tache {
+    id: number;
+    titre: string;
+    statut: StatutTache;
+    priorite: Priorite;
+}
+
+// Enum numérique pour la priorité
+enum Priorite {
+    Basse = 1,
+    Moyenne = 2,
+    Haute = 3,
+    Critique = 4
+}
+
+// Fonction utilisant les enums
+function afficherTache(tache: Tache): void {
+    const iconeStatut: Record<StatutTache, string> = {
+        [StatutTache.NonCommencee]: "⬜",
+        [StatutTache.EnCours]: "🔄",
+        [StatutTache.EnPause]: "⏸️",
+        [StatutTache.Terminee]: "✅",
+        [StatutTache.Annulee]: "❌"
+    };
+
+    const iconePriorite: Record<Priorite, string> = {
+        [Priorite.Basse]: "🟢",
+        [Priorite.Moyenne]: "🟡",
+        [Priorite.Haute]: "🟠",
+        [Priorite.Critique]: "🔴"
+    };
+
+    console.log(`\n${iconeStatut[tache.statut]} Tâche #${tache.id}: ${tache.titre}`);
+    console.log(`   Statut: ${tache.statut}`);
+    console.log(`   Priorité: ${iconePriorite[tache.priorite]} ${Priorite[tache.priorite]}`);
+}
+
+// Création de tâches
+const taches: Tache[] = [
+    { id: 1, titre: "Apprendre TypeScript", statut: StatutTache.EnCours, priorite: Priorite.Haute },
+    { id: 2, titre: "Créer un projet", statut: StatutTache.NonCommencee, priorite: Priorite.Moyenne },
+    { id: 3, titre: "Réviser JavaScript", statut: StatutTache.Terminee, priorite: Priorite.Basse }
+];
+
+taches.forEach(afficherTache);
+
+// Const enum (optimisé, inline à la compilation)
+const enum Direction {
+    Haut = "HAUT",
+    Bas = "BAS",
+    Gauche = "GAUCHE",
+    Droite = "DROITE"
+}
+
+function deplacer(direction: Direction): void {
+    console.log(`\nDéplacement vers: ${direction}`);
+}
+
+deplacer(Direction.Haut);
+deplacer(Direction.Droite);
+
+// ============================================
+// Résumé et conclusion
+// ============================================
+
+console.log("\n========================================");
+console.log("✅ Partie 5 terminée - TypeScript Avancé maîtrisé!");
+console.log("========================================");
+console.log(`
+📚 Concepts couverts:
+   1. Generics: Fonctions, interfaces et classes génériques
+   2. Unions: string | number, types littéraux, nullable
+   3. Optionnels: Propriétés et paramètres optionnels
+   4. Enums: Numériques, string, et const enums
+`);
+
