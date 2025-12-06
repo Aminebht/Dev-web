@@ -1,0 +1,76 @@
+<!-- Conteneur principal du composant de filtrage des produits -->
+<div class="product-filter-container">
+  
+  <!-- En-tête de l'application -->
+  <header>
+    <h1>Para-Pharmacie - Catalogue des Produits</h1>
+  </header>
+
+  <!-- Section de recherche avec input lié à searchTerm via [(ngModel)] -->
+  <div class="search-section">
+    <label for="search">Rechercher un produit :</label>
+    <input 
+      type="text" 
+      id="search"
+      class="search-input"
+      [(ngModel)]="searchTerm" 
+      placeholder="Tapez le nom d'un produit..."
+    />
+  </div>
+
+  <!-- 
+    Directive @if moderne d'Angular :
+    Affiche la liste des produits SI il y a des résultats,
+    SINON affiche un message "aucun résultat"
+  -->
+  @if (filteredProducts.length > 0) {
+    <!-- Liste des produits affichée en grille responsive -->
+    <div class="products-list">
+      
+      <!-- 
+        Directive @for moderne d'Angular :
+        Parcourt tous les produits filtrés
+        track product.id : optimise le rendu en identifiant chaque produit par son ID
+      -->
+      @for (product of filteredProducts; track product.id) {
+        <!-- Carte représentant un produit -->
+        <article class="product-card">
+          
+          <!-- En-tête de la carte : nom et prix -->
+          <div class="product-header">
+            <h2 class="product-name">{{ product.name }}</h2>
+            <span class="product-price">{{ product.price.toFixed(2) }} TND</span>
+          </div>
+          
+          <!-- Détails du produit : catégorie et stock -->
+          <div class="product-details">
+            <!-- Badge de catégorie -->
+            <span class="product-category">{{ product.category }}</span>
+            
+            <!-- 
+              Badge de stock avec code couleur dynamique :
+              [ngClass] applique la classe retournée par getStockClass()
+              - stock-out (rouge) si stock = 0
+              - stock-low (orange) si stock < 5
+              - stock-ok (vert) si stock >= 5
+            -->
+            <span class="product-stock" [ngClass]="getStockClass(product.stock)">
+              <!-- Affichage conditionnel selon le stock -->
+              @if (product.stock === 0) {
+                Rupture de stock
+              } @else {
+                Stock : {{ product.stock }}
+              }
+            </span>
+          </div>
+        </article>
+      }
+    </div>
+  } @else {
+    <!-- Message affiché quand aucun produit ne correspond à la recherche -->
+    <div class="no-results">
+      <p>Aucun produit trouvé pour "{{ searchTerm }}"</p>
+      <p class="hint">Essayez une autre recherche</p>
+    </div>
+  }
+</div>

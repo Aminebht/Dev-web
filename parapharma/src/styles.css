@@ -1,0 +1,29 @@
+/**
+ * Styles globaux de l'application para-pharma
+ * 
+ * Ces styles s'appliquent à toute l'application et définissent :
+ * - Reset CSS de base
+ * - Fond dégradé pour la page
+ * - Styles de base du body
+ */
+
+/* Reset CSS universel pour une cohérence entre navigateurs */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* Inclut padding et border dans la largeur/hauteur */
+}
+
+/**
+ * Styles du body
+ * - Police système moderne et lisible
+ * - Dégradé violet/pourpre en arrière-plan pour un look moderne
+ * - Min-height 100vh pour occuper toute la hauteur de l'écran
+ * - Padding vertical pour aérer le contenu
+ */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  padding: 2rem 0;
+}

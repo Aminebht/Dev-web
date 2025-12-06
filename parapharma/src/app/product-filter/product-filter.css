@@ -1,0 +1,312 @@
+/**
+ * Styles pour le composant ProductFilter
+ * Design moderne et responsive avec code couleur pour les niveaux de stock
+ */
+
+/* ========== CONTENEUR PRINCIPAL ========== */
+
+/**
+ * Conteneur principal qui enveloppe tout le composant
+ * - Centré horizontalement avec max-width
+ * - Fond blanc avec ombre portée
+ * - Coins arrondis pour un look moderne
+ */
+.product-filter-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* ========== EN-TÊTE ========== */
+
+/**
+ * En-tête de l'application
+ * Centrée avec marge inférieure
+ */
+header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/**
+ * Titre principal de l'application
+ * - Police grande et grasse
+ * - Bordure inférieure bleue pour l'accent visuel
+ */
+h1 {
+  color: #2c3e50;
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 0;
+  padding-bottom: 1rem;
+  border-bottom: 3px solid #3498db;
+}
+
+/* ========== SECTION DE RECHERCHE ========== */
+
+/**
+ * Conteneur de la barre de recherche
+ * - Fond gris clair pour la différencier
+ * - Coins arrondis et ombre légère
+ */
+.search-section {
+  margin-bottom: 2rem;
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/**
+ * Label du champ de recherche
+ * - Affiché en bloc au-dessus de l'input
+ * - Police moyenne avec poids accentué
+ */
+.search-section label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #34495e;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+/**
+ * Champ de saisie de la recherche
+ * - Pleine largeur avec padding confortable
+ * - Bordure grise qui devient bleue au focus
+ * - Transition fluide pour l'interaction
+ */
+.search-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 2px solid #dce4ec;
+  border-radius: 6px;
+  transition: border-color 0.3s ease;
+  box-sizing: border-box;
+}
+
+/**
+ * État focus de l'input
+ * - Bordure bleue pour indiquer l'état actif
+ * - Suppression de l'outline par défaut
+ */
+.search-input:focus {
+  outline: none;
+  border-color: #3498db;
+}
+
+/* ========== LISTE DES PRODUITS ========== */
+
+/**
+ * Grille responsive pour afficher les produits
+ * - Auto-fill : crée autant de colonnes que possible
+ * - Colonnes de minimum 300px
+ * - Gap de 1.5rem entre les cartes
+ */
+.products-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+/* ========== CARTE PRODUIT ========== */
+
+/**
+ * Carte individuelle représentant un produit
+ * - Fond blanc avec ombre subtile
+ * - Animation au survol (élévation et ombre accentuée)
+ * - Transition fluide pour l'effet hover
+ */
+.product-card {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/**
+ * Effet hover sur la carte
+ * - Légère élévation (-4px)
+ * - Ombre plus prononcée pour l'effet de profondeur
+ */
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/**
+ * En-tête de la carte produit
+ * - Flexbox pour aligner nom et prix
+ * - Espace entre les éléments avec gap
+ */
+.product-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+/**
+ * Nom du produit
+ * - H2 mais stylisé pour s'intégrer dans la carte
+ * - Flex: 1 pour occuper l'espace disponible
+ */
+.product-name {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 1.1rem;
+  font-weight: 600;
+  flex: 1;
+}
+
+/**
+ * Prix du produit
+ * - Vert pour indiquer le prix
+ * - Police grande et grasse
+ * - white-space: nowrap empêche le retour à la ligne
+ */
+.product-price {
+  color: #27ae60;
+  font-size: 1.2rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* ========== DÉTAILS DU PRODUIT ========== */
+
+/**
+ * Conteneur des détails (catégorie et stock)
+ * - Flexbox pour alignement horizontal
+ * - Space-between pour séparer les badges
+ */
+.product-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+/**
+ * Badge de catégorie
+ * - Fond gris clair avec texte gris foncé
+ * - Coins arrondis et padding pour l'aspect "pill"
+ */
+.product-category {
+  display: inline-block;
+  padding: 0.4rem 0.8rem;
+  background: #ecf0f1;
+  color: #7f8c8d;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+/**
+ * Badge de stock
+ * - Style de base (padding, coins arrondis)
+ * - La couleur est définie par les classes stock-*
+ */
+.product-stock {
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* ========== CODE COULEUR DU STOCK ========== */
+
+/**
+ * Stock OK (>= 5 unités)
+ * - Fond vert clair avec texte vert foncé
+ * - Indique un niveau de stock suffisant
+ */
+.stock-ok {
+  background: #d4edda;
+  color: #155724;
+}
+
+/**
+ * Stock faible (< 5 unités mais > 0)
+ * - Fond orange clair avec texte orange foncé
+ * - Avertit d'un niveau de stock bas
+ */
+.stock-low {
+  background: #fff3cd;
+  color: #856404;
+}
+
+/**
+ * Rupture de stock (0 unité)
+ * - Fond rouge clair avec texte rouge foncé
+ * - Alerte critique : produit indisponible
+ */
+.stock-out {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+/* ========== MESSAGE AUCUN RÉSULTAT ========== */
+
+/**
+ * Conteneur du message quand aucun produit n'est trouvé
+ * - Centré avec fond gris clair
+ * - Padding généreux pour la lisibilité
+ */
+.no-results {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin-top: 2rem;
+}
+
+/**
+ * Paragraphes du message "aucun résultat"
+ * - Texte gris avec taille moyenne
+ */
+.no-results p {
+  margin: 0.5rem 0;
+  color: #6c757d;
+  font-size: 1.1rem;
+}
+
+/**
+ * Texte d'aide/suggestion
+ * - Plus petit et plus clair que le message principal
+ */
+.no-results .hint {
+  font-size: 0.95rem;
+  color: #adb5bd;
+}
+
+/* ========== RESPONSIVE DESIGN ========== */
+
+/**
+ * Adaptation pour écrans mobiles (< 768px)
+ * - Padding réduit
+ * - Titre plus petit
+ * - Grille en une seule colonne
+ */
+@media (max-width: 768px) {
+  .product-filter-container {
+    padding: 1rem;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .products-list {
+    grid-template-columns: 1fr;
+  }
+}
